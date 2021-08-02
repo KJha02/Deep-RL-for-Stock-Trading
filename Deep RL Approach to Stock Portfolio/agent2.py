@@ -89,7 +89,7 @@ class dqnAgent:
         self.Q_eval.optimizer.step()
     
         if self.epsilon >= self.eps_end:
-            self.epsilon -= self.eps_dec 
+            self.epsilon *= self.eps_dec 
         else:
             self.epsilon = self.eps_end
             
