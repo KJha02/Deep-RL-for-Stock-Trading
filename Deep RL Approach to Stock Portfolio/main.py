@@ -57,3 +57,32 @@ plt.ylabel("Final Account Balance")
 plt.title("Change in Final Balance Over 100 Episodes")
 plt.savefig(dataPath + "charts/100epBalance.png")
 plt.show()
+
+#%%
+n_games = 500
+for i in range(100, n_games):
+    score = 0
+    done = False
+    observation = myEnv.reset()
+    while not done:
+        action = myAgent.chooseAction(observation)
+        nextObs, reward, done = myEnv.step(action)
+        score += reward
+        myAgent.storeTransition(observation, action, reward, nextObs, done)
+        myAgent.learn()
+        observation = nextObs
+    scores.append(score)
+    profits.append(myEnv.profit)
+    balance.append(myEnv.currBalance)
+    epsHistory.append(myAgent.epsilon)
+    averageScore = np.mean(scores[-100:])
+    x.append(i+1)
+    print("episode ", i, "score %.2f" % score, "average score %.2f" % averageScore, "epsilon %.2f" % myAgent.epsilon)
+    
+#%%
+plt.scatter(x, balance)
+plt.xlabel("Episode Number")
+plt.ylabel("Final Account Balance")
+plt.title("Change in Final Balance Over 500 Episodes")
+plt.savefig(dataPath + "charts/500epBalance.png")
+plt.show() # the results indicate catastrophic forgetting
