@@ -30,6 +30,7 @@ class env:
         self.boughtPrices = []
         self.profit = 0.0
         
+        self.actionSpace = list(i for i in range(10))
         
         
     def buy(self):
@@ -102,6 +103,8 @@ class env:
         self.currentDay = 0
         self.netPurchase = 0.0
         self.profit = 0.0
+        self.boughtPrices = []
+        
         
         return self.getObservation(0)
         
